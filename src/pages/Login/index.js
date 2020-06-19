@@ -7,52 +7,52 @@ import style from '../SignIn/sign-in.module.css'
 
 // eslint-disable-next-line no-unused-vars
 function Login() {
-
   const [username, setUserName] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [err, setErr] = React.useState('')
 
   const handleClick = (e) => {
     e.preventDefault()
+    // eslint-disable-next-line no-console
     console.log(username, password)
     fetch('http://localhost:5432/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username,
-        password
-      })
+        password,
+      }),
     })
-      .then(response => {
+      .then((response) => {
         if (!response.ok) throw response.status
         return response.json()
       })
-      .then(json => {
-        console.log(json.user.token)
+      .then((json) => {
         window.localStorage.setItem('token', json.user.token)
         // eslint-disable-next-line no-restricted-globals
-        window.location.assign("http://localhost:3000/")
+        window.location.assign('http://localhost:3000/')
       })
-      .catch((err) => {
-        console.log(err)
-        setErr(`incorrect nickname or password`)
+      .catch(() => {
+        setErr('incorrect nickname or password')
       })
   }
 
   return (
     <div>
-      <Nav/>
-      {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+      <Nav />
       <div className={style.mainCont}>
-        <label>
-          <input value={username} onChange={e => setUserName(e.target.value)} type="text"
-                 placeholder="user name"/>
-        </label>
-        {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-        <label>
-          <input value={password} onChange={e => setPassword(e.target.value)} type="password"
-                 placeholder="password"/>
-        </label>
+        <input
+          value={username}
+          onChange={(e) => setUserName(e.target.value)}
+          type="text"
+          placeholder="user name"
+        />
+        <input
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          type="password"
+          placeholder="password"
+        />
         {/* eslint-disable-next-line react/button-has-type */}
         <button className={style.btn} onClick={handleClick}>Sign Up</button>
         <p>{err}</p>

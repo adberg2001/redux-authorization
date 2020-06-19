@@ -3,7 +3,8 @@ const initialState = {
   firstName: '',
   lastName: '',
   nickName: '',
-  password: ''
+  password: '',
+  error: '',
 }
 
 // eslint-disable-next-line no-unused-vars,consistent-return
@@ -29,6 +30,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         password: action.password,
+      }
+    case 'THROW_ERROR':
+      return {
+        ...state,
+        error: action.error,
       }
     default:
       return state
